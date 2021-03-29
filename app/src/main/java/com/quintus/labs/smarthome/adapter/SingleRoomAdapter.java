@@ -2,6 +2,7 @@ package com.quintus.labs.smarthome.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quintus.labs.smarthome.R;
 import com.quintus.labs.smarthome.model.Room;
+import com.quintus.labs.smarthome.utils.SwitchButton;
 
 import java.util.List;
 
@@ -57,11 +59,24 @@ public class SingleRoomAdapter extends RecyclerView.Adapter<SingleRoomAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public CardView cardView;
-
+        SwitchButton sbToggle;
         public MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
             cardView = view.findViewById(R.id.card_view);
+            sbToggle =view.findViewById(R.id.sbToggle);
+            sbToggle.setChecked(true);
+            sbToggle.isChecked();
+            sbToggle.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                    if(isChecked){
+                        Log.d("TAGz", "onCheckedChanged: aaaa");
+                    }else{
+                        Log.d("TAGz", "onCheckedChanged: bbbb");
+                    }
+                }
+            });
 
         }
     }

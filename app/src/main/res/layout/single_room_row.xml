@@ -53,6 +53,7 @@
                 android:gravity="center">
 
                 <com.quintus.labs.smarthome.utils.SwitchButton
+                    android:id="@+id/sbToggle"
                     android:layout_width="65dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
