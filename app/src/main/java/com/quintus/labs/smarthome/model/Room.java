@@ -11,6 +11,9 @@ public class Room {
     String id;
     String name;
 
+    public Room() {
+    }
+
     public Room(String id, String name) {
         this.id = id;
         this.name = name;

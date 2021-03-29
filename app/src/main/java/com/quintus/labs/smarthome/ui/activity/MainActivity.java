@@ -18,6 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.quintus.labs.smarthome.R;
 import com.quintus.labs.smarthome.adapter.RoomAdapter;
 import com.quintus.labs.smarthome.model.Room;
@@ -46,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    public static final String LIST_ROOM = "room";
 
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
@@ -99,22 +107,40 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        database = FirebaseDatabase.getInstance();
+        myRef =database.getReference(LIST_ROOM).child("PATH");
         prepareRoomData();
     }
 
     private void prepareRoomData() {
-        Room room = new Room("1", "Phòng 1");
-        roomList.add(room);
-        room = new Room("2", "Phòng 2");
-        roomList.add(room);
-        room = new Room("1", "Phòng 3");
-        roomList.add(room);
-        room = new Room("2", "Phòng 4");
-        roomList.add(room);
-        room = new Room("1", "Phòng 5");
-        roomList.add(room);
+//        Room room = new Room("1", "Phòng 1");
+//        roomList.add(room);
+//        room = new Room("2", "Phòng 2");
+//        roomList.add(room);
+//        room = new Room("1", "Phòng 3");
+//        roomList.add(room);
+//        room = new Room("2", "Phòng 4");
+//        roomList.add(room);
+//        room = new Room("1", "Phòng 5");
+//        roomList.add(room);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                List<Room> list = new ArrayList<>();
+                roomList.clear();
+                for(DataSnapshot deviceSnapshot:dataSnapshot.getChildren()){
+                    Room device =deviceSnapshot.getValue(Room.class);
+                    roomList.add(device);
+                }
 
-        mAdapter.notifyDataSetChanged();
+//                Log.d("TAGz", "onDataChange: "+roomList.size()+" x "+list.size());
+                mAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("TAGz", "Failed to read value.", error.toException());
+            }
+        });
     }
 
     @Override
