@@ -62,7 +62,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:text="BedRoom"
+                                android:text="Phòng"
                                 android:textColor="@color/white"
                                 android:textSize="25dp"
                                 android:textStyle="bold" />
@@ -126,7 +126,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="20\u2103"
+                                    android:text="--\u2103"
                                     android:textColor="@color/white"
                                     android:textSize="25dp"
                                     android:textStyle="bold" />
@@ -172,7 +172,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="50%"
+                                    android:text="--%"
                                     android:textColor="@color/white"
                                     android:textSize="25dp"
                                     android:textStyle="bold" />
@@ -180,7 +180,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="TEMP"
+                                    android:text="HUMI"
                                     android:textColor="@color/white"
                                     android:textSize="16dp"
                                     android:textStyle="bold" />

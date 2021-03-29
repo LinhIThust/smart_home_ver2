@@ -57,9 +57,9 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="5dp"
-                    app:sb_background="@color/colorPrimaryLight"
+                    app:sb_background="@color/deep_orange"
                     app:sb_button_color="@color/colorPrimaryDark"
-                    app:sb_checked_color="#6C6A74"
+                    app:sb_checked_color="@color/on_device"
                     app:sb_checkline_color="#a5dc88"
                     app:sb_shadow_color="#A36F95"
                     app:sb_uncheckcircle_color="#3F51B5" />
