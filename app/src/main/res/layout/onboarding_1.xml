@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/bg22">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -29,20 +29,20 @@
          app:srcCompat="@drawable/onboarding_activity_ic_waves_1"
          tools:ignore="VectorDrawableCompat" />-->
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="Picture of person giving test"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toEndOf="@+id/guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/onboarding_activity_ic_image_1"
-        tools:ignore="VectorDrawableCompat" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView3"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:contentDescription="Picture of person giving test"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guideline7"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/guideline5"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline5"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/guideline3"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/guideline12"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        app:srcCompat="@drawable/onboarding_activity_ic_image_1"-->
+<!--        tools:ignore="VectorDrawableCompat" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
