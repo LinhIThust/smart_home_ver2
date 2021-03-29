@@ -46,6 +46,7 @@
     <color name="amber">#FFC107</color>
     <color name="orange">#FF9800</color>
     <color name="deep_orange">#FF5722</color>
+    <color name="on_device">#00FF2B</color>
     <color name="brown">#795548</color>
     <color name="grey">#E0E0E0</color>
 
