@@ -1,0 +1,101 @@
+{
+  "project_info": {
+    "project_number": "1060071612694",
+    "firebase_url": "https://smarthome2021-8d81a-default-rtdb.firebaseio.com",
+    "project_id": "smarthome2021-8d81a",
+    "storage_bucket": "smarthome2021-8d81a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060071612694:android:45a17363e245220b4f3037",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060071612694-hu9p0rq4f3ahmue0g2gcunfaoa01h1ae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "ae8aeda120d922dd46f058fbaaa0724800ec7464"
+          }
+        },
+        {
+          "client_id": "1060071612694-p2hqfvhgv6eo68qa7i9d7k1jt3cmg14t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "51534ba967909d40e2eda9a68842a1bf2ffe7d1e"
+          }
+        },
+        {
+          "client_id": "1060071612694-ug8d8tg6342bepuo2pfc34apdi6d3rp7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "0605d5ebcb5ef8a91e26a3cb27bf8bb977ecee97"
+          }
+        },
+        {
+          "client_id": "1060071612694-84cdqsogcqkkcb0f3s2ghd0unrgdh6hr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgB0ssmmquLqLWZjmTIPjta5YHAccZULI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060071612694-84cdqsogcqkkcb0f3s2ghd0unrgdh6hr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060071612694:android:43a6e9b4e64b21874f3037",
+        "android_client_info": {
+          "package_name": "com.quintus.labs.smarthome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060071612694-l8ehnr68so61othp1infuade7vd60d7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quintus.labs.smarthome",
+            "certificate_hash": "ae8aeda120d922dd46f058fbaaa0724800ec7464"
+          }
+        },
+        {
+          "client_id": "1060071612694-84cdqsogcqkkcb0f3s2ghd0unrgdh6hr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgB0ssmmquLqLWZjmTIPjta5YHAccZULI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060071612694-84cdqsogcqkkcb0f3s2ghd0unrgdh6hr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

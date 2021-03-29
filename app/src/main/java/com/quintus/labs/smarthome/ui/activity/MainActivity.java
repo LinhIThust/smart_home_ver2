@@ -4,22 +4,29 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.quintus.labs.smarthome.R;
 import com.quintus.labs.smarthome.adapter.RoomAdapter;
 import com.quintus.labs.smarthome.model.Room;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Smart Home
@@ -32,7 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RoomAdapter mAdapter;
 
+
     RelativeLayout home_rl, time_rl, setting_rl, scene_rl;
+    TextView tvNameAccout;
+    CircleImageView ivAvatar;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
@@ -58,15 +72,20 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        user =mAuth.getCurrentUser();
 
-
+        tvNameAccout =findViewById(R.id.tvNameAccout);
+        ivAvatar =findViewById(R.id.ivAvatar);
         home_rl = findViewById(R.id.home_rl);
         time_rl = findViewById(R.id.time_rl);
         scene_rl = findViewById(R.id.scene_rl);
         setting_rl = findViewById(R.id.setting_rl);
 
         recyclerView = findViewById(R.id.recycler_view);
-
+        Log.d("TAGz", "onCreate: "+user.getPhotoUrl());
+        Picasso.get().load(user.getPhotoUrl()).into(ivAvatar);
+        tvNameAccout.setText(user.getDisplayName());
         home_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,5 +115,10 @@ public class MainActivity extends AppCompatActivity {
         roomList.add(room);
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 }
