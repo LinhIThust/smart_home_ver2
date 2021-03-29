@@ -44,7 +44,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Room room = roomList.get(position);
+        final Room room = roomList.get(position);
 
         holder.title.setText(room.getName());
 
@@ -52,6 +52,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
+                intent.putExtra("name_room",room.getName());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

@@ -154,6 +154,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginClicked(View view) {
         signIn();
-        finish();
+//        finish();
     }
 }

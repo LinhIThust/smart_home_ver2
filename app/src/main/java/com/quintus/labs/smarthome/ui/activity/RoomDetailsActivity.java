@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -31,6 +32,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private List<Room> roomList = new ArrayList<>();
     private RecyclerView recyclerView;
     private SingleRoomAdapter mAdapter;
+    TextView tvRoomName;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
@@ -56,7 +58,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
-
+        tvRoomName =findViewById(R.id.tvRoomName);
+        tvRoomName.setText(getIntent().getStringExtra("name_room"));
         recyclerView = findViewById(R.id.recycler_view);
 
         mAdapter = new SingleRoomAdapter(roomList, getApplicationContext());
