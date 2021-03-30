@@ -93,12 +93,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void prepareRoomData() {
-//        Device d0 = new Device(1,"d1","Quạt");
-//        deviceList.add(d0);
-//        Device d1 = new Device(0,"d1","Tivi");
-//        deviceList.add(d1);
-//        Device d2 = new Device(0,"d1","Bóng");
-//        deviceList.add(d2);
         database = FirebaseDatabase.getInstance();
 //        PATH=user.getEmail().substring(0,user.getEmail().indexOf('@'));
         myRef =database.getReference(LIST_DEVICE).child(PATH);
@@ -113,10 +107,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 Log.d(TAG, "onDataChange: "+deviceList.size());
                 mAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

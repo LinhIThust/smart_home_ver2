@@ -11,12 +11,17 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.quintus.labs.smarthome.R;
 import com.quintus.labs.smarthome.model.Device;
 import com.quintus.labs.smarthome.model.Room;
 import com.quintus.labs.smarthome.utils.SwitchButton;
 
 import java.util.List;
+
+import static com.quintus.labs.smarthome.ui.activity.RoomDetailsActivity.LIST_DEVICE;
+import static com.quintus.labs.smarthome.ui.activity.RoomDetailsActivity.PATH;
 
 /**
  * Smart Home
@@ -46,10 +51,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Device device = deviceList.get(position);
-
         holder.setData(device);
-
-
     }
 
     @Override
@@ -61,27 +63,32 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
         public TextView title;
         public CardView cardView;
         SwitchButton sbToggle;
-        Device d;
+        public Device dv;
         public MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
             cardView = view.findViewById(R.id.card_view);
             sbToggle =view.findViewById(R.id.sbToggle);
             sbToggle.setChecked(true);
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("zzza", "onClick: Hello");
+                }
+            });
             sbToggle.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                    if(isChecked){
-                        Log.d("TAGz", "onCheckedChanged: aaaa");
-                    }else{
-                        Log.d("TAGz", "onCheckedChanged: bbbb");
-                    }
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference(LIST_DEVICE).child(PATH);
+                    myRef.child(dv.getId()).setValue(new Device(1-dv.getStatus(), dv.getId(), dv.getName()));
                 }
             });
 
         }
 
         public void setData(Device device) {
+            dv = device;
             title.setText(device.getName());
             if(device.getStatus() ==1) sbToggle.setChecked(true);
             else sbToggle.setChecked(false);
