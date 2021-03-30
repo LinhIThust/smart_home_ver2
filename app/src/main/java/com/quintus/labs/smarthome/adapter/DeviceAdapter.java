@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,23 +65,26 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
         public CardView cardView;
         SwitchButton sbToggle;
         public Device dv;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(LIST_DEVICE).child(PATH);
         public MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
             cardView = view.findViewById(R.id.card_view);
             sbToggle =view.findViewById(R.id.sbToggle);
             sbToggle.setChecked(true);
-            title.setOnClickListener(new View.OnClickListener() {
+            title.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Log.d("zzza", "onClick: Hello");
+                public boolean onLongClick(View v) {
+//                    Toast.makeText(context, "This is my Toast message!",
+//                            Toast.LENGTH_LONG).show();
+                    myRef.child(dv.getId()).setValue(new Device(dv.getStatus(), dv.getId(), "Change"));
+                    return true;
                 }
             });
             sbToggle.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference(LIST_DEVICE).child(PATH);
                     myRef.child(dv.getId()).setValue(new Device(1-dv.getStatus(), dv.getId(), dv.getName()));
                 }
             });
