@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quintus.labs.smarthome.R;
+import com.quintus.labs.smarthome.model.Device;
 import com.quintus.labs.smarthome.model.Room;
 import com.quintus.labs.smarthome.utils.SwitchButton;
 
@@ -24,13 +25,13 @@ import java.util.List;
  * Created by : Santosh Kumar Dash:- http://santoshdash.epizy.com
  */
 
-public class SingleRoomAdapter extends RecyclerView.Adapter<SingleRoomAdapter.MyViewHolder> {
+public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHolder> {
 
     Context context;
-    private List<Room> roomList;
+    private List<Device> deviceList;
 
-    public SingleRoomAdapter(List<Room> roomList, Context context) {
-        this.roomList = roomList;
+    public DeviceAdapter(List<Device> deviceList, Context context) {
+        this.deviceList = deviceList;
         this.context = context;
     }
 
@@ -44,29 +45,29 @@ public class SingleRoomAdapter extends RecyclerView.Adapter<SingleRoomAdapter.My
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Room room = roomList.get(position);
+        Device device = deviceList.get(position);
 
-        holder.title.setText(room.getName());
+        holder.setData(device);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return roomList.size();
+        return deviceList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public CardView cardView;
         SwitchButton sbToggle;
+        Device d;
         public MyViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
             cardView = view.findViewById(R.id.card_view);
             sbToggle =view.findViewById(R.id.sbToggle);
             sbToggle.setChecked(true);
-            sbToggle.isChecked();
             sbToggle.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(SwitchButton view, boolean isChecked) {
@@ -78,6 +79,12 @@ public class SingleRoomAdapter extends RecyclerView.Adapter<SingleRoomAdapter.My
                 }
             });
 
+        }
+
+        public void setData(Device device) {
+            title.setText(device.getName());
+            if(device.getStatus() ==1) sbToggle.setChecked(true);
+            else sbToggle.setChecked(false);
         }
     }
 }

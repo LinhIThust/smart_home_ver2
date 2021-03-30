@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quintus.labs.smarthome.R;
-import com.quintus.labs.smarthome.adapter.SingleRoomAdapter;
-import com.quintus.labs.smarthome.model.Room;
+import com.quintus.labs.smarthome.adapter.DeviceAdapter;
+import com.quintus.labs.smarthome.model.Device;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +29,9 @@ import java.util.List;
  * Created by : Santosh Kumar Dash:- http://santoshdash.epizy.com
  */
 public class RoomDetailsActivity extends AppCompatActivity {
-    private List<Room> roomList = new ArrayList<>();
+    private List<Device> deviceList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private SingleRoomAdapter mAdapter;
+    private DeviceAdapter mAdapter;
     TextView tvRoomName;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
@@ -62,7 +62,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         tvRoomName.setText(getIntent().getStringExtra("name_room"));
         recyclerView = findViewById(R.id.recycler_view);
 
-        mAdapter = new SingleRoomAdapter(roomList, getApplicationContext());
+        mAdapter = new DeviceAdapter(deviceList, getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -72,21 +72,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void prepareRoomData() {
-        Room room = new Room("1", "Light");
-        roomList.add(room);
-        room = new Room("2", "Fan");
-        roomList.add(room);
-        room = new Room("1", "Air Conditioner");
-        roomList.add(room);
-        room = new Room("2", "Table Light");
-        roomList.add(room);
-        room = new Room("1", "Stand Fan");
-        roomList.add(room);
-        room = new Room("2", "Footer Light");
-        roomList.add(room);
-        room = new Room("1", "TV");
-        roomList.add(room);
-
+        Device d0 = new Device(1,"d1","Quạt");
+        deviceList.add(d0);
+        Device d1 = new Device(0,"d1","Tivi");
+        deviceList.add(d1);
+        Device d2 = new Device(0,"d1","Bóng");
+        deviceList.add(d2);
         mAdapter.notifyDataSetChanged();
     }
 
