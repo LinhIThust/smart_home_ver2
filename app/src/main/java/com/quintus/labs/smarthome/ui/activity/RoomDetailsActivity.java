@@ -5,18 +5,28 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.quintus.labs.smarthome.R;
-import com.quintus.labs.smarthome.adapter.SingleRoomAdapter;
-import com.quintus.labs.smarthome.model.Room;
+import com.quintus.labs.smarthome.adapter.DeviceAdapter;
+import com.quintus.labs.smarthome.model.Device;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +38,18 @@ import java.util.List;
  * Created by : Santosh Kumar Dash:- http://santoshdash.epizy.com
  */
 public class RoomDetailsActivity extends AppCompatActivity {
-    private List<Room> roomList = new ArrayList<>();
+    private List<Device> deviceList = new ArrayList<>();
+    private static final String TAG = "Main_Activity";
+    public static final String LIST_DEVICE = "device";
+    public static String PATH ="test";
     private RecyclerView recyclerView;
-    private SingleRoomAdapter mAdapter;
+    private DeviceAdapter mAdapter;
+    TextView tvRoomName;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    public static FirebaseAuth mAuth;
+    private FirebaseUser user;
+
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
@@ -57,9 +76,14 @@ public class RoomDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
 
+        mAuth = FirebaseAuth.getInstance();
+        user =mAuth.getCurrentUser();
+
+        tvRoomName =findViewById(R.id.tvRoomName);
+        tvRoomName.setText(getIntent().getStringExtra("name_room"));
         recyclerView = findViewById(R.id.recycler_view);
 
-        mAdapter = new SingleRoomAdapter(roomList, getApplicationContext());
+        mAdapter = new DeviceAdapter(deviceList, getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -69,22 +93,24 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void prepareRoomData() {
-        Room room = new Room("1", "Light");
-        roomList.add(room);
-        room = new Room("2", "Fan");
-        roomList.add(room);
-        room = new Room("1", "Air Conditioner");
-        roomList.add(room);
-        room = new Room("2", "Table Light");
-        roomList.add(room);
-        room = new Room("1", "Stand Fan");
-        roomList.add(room);
-        room = new Room("2", "Footer Light");
-        roomList.add(room);
-        room = new Room("1", "TV");
-        roomList.add(room);
-
-        mAdapter.notifyDataSetChanged();
+        database = FirebaseDatabase.getInstance();
+//        PATH=user.getEmail().substring(0,user.getEmail().indexOf('@'));
+        myRef =database.getReference(LIST_DEVICE).child(PATH);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                deviceList.clear();
+                for(DataSnapshot deviceSnapshot:snapshot.getChildren()){
+                    Device device =deviceSnapshot.getValue(Device.class);
+                    deviceList.add(device);
+                }
+                Log.d(TAG, "onDataChange: "+deviceList.size());
+                mAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     public void onBackClicked(View view) {
