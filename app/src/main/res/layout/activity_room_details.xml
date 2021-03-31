@@ -87,7 +87,7 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:background="@drawable/ic_settings_black_24dp" />
+                                android:background="@drawable/ic_baseline_search_24" />
                         </LinearLayout>
                     </LinearLayout>
 
