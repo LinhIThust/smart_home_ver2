@@ -3,9 +3,11 @@ package com.quintus.labs.smarthome.adapter;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public CardView cardView;
+        public EditText edNameDevice;
         SwitchButton sbToggle;
         public Device dv;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -72,15 +75,28 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
             title = view.findViewById(R.id.title);
             cardView = view.findViewById(R.id.card_view);
             sbToggle =view.findViewById(R.id.sbToggle);
+            edNameDevice =view.findViewById(R.id.edNameDevice);
             sbToggle.setChecked(true);
             title.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-//                    Toast.makeText(context, "This is my Toast message!",
-//                            Toast.LENGTH_LONG).show();
-                    myRef.child(dv.getId()).setValue(new Device(dv.getStatus(), dv.getId(), "Change"));
+                    title.setVisibility(View.INVISIBLE);
+                    edNameDevice.setText(title.getText().toString());
+                    edNameDevice.setVisibility(View.VISIBLE);
                     return true;
                 }
+            });
+            edNameDevice.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode==KeyEvent.KEYCODE_ENTER) {
+                        title.setVisibility(View.VISIBLE);
+                        edNameDevice.setVisibility(View.INVISIBLE);
+                        myRef.child(dv.getId()).setValue(new Device(dv.getStatus(), dv.getId(), edNameDevice.getText().toString()));
+                    }
+                    return true;
+                }
+
             });
             sbToggle.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
                 @Override
