@@ -110,7 +110,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
         public void setData(Device device) {
             dv = device;
             title.setText(device.getName());
-            if(device.getStatus() ==1) sbToggle.setChecked(true);
+            if(device.getStatus() ==0) sbToggle.setChecked(true);
             else sbToggle.setChecked(false);
         }
     }

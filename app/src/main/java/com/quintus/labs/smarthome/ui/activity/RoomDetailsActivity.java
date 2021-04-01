@@ -3,12 +3,14 @@ package com.quintus.labs.smarthome.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,9 @@ import com.quintus.labs.smarthome.R;
 import com.quintus.labs.smarthome.adapter.DeviceAdapter;
 import com.quintus.labs.smarthome.model.Device;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +42,7 @@ import java.util.List;
  * Created on 27-OCT-2019.
  * Created by : Santosh Kumar Dash:- http://santoshdash.epizy.com
  */
-public class RoomDetailsActivity extends AppCompatActivity {
+public class RoomDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     private List<Device> deviceList = new ArrayList<>();
     private static final String TAG = "Main_Activity";
     public static final String LIST_DEVICE = "device";
@@ -45,11 +50,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DeviceAdapter mAdapter;
     TextView tvRoomName;
+    ImageView ivScanDevice;
     FirebaseDatabase database;
     DatabaseReference myRef;
     public static FirebaseAuth mAuth;
     private FirebaseUser user;
-
+    byte[] receiveData = new byte[1024];
+    String data;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
@@ -78,7 +85,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         user =mAuth.getCurrentUser();
-
+        ivScanDevice =findViewById(R.id.ivScanDevice);
+        ivScanDevice.setOnClickListener(this);
         tvRoomName =findViewById(R.id.tvRoomName);
         tvRoomName.setText(getIntent().getStringExtra("name_room"));
         recyclerView = findViewById(R.id.recycler_view);
@@ -94,7 +102,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     private void prepareRoomData() {
         database = FirebaseDatabase.getInstance();
-//        PATH=user.getEmail().substring(0,user.getEmail().indexOf('@'));
+        PATH=user.getEmail().substring(0,user.getEmail().indexOf('@'));
         myRef =database.getReference(LIST_DEVICE).child(PATH);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -116,5 +124,49 @@ public class RoomDetailsActivity extends AppCompatActivity {
     public void onBackClicked(View view) {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case  R.id.ivScanDevice:
+                new CheckStatusTask().execute();
+                break;
+        }
+    }
+    private void sendUDPMessage(String msg,String msgOK) {
+        try {
+            Log.d("TESST",msg);
+            DatagramSocket clientSocket = new DatagramSocket(9072);
+            clientSocket.setBroadcast(true);
+            InetAddress address = InetAddress.getByName("255.255.255.255");
+            byte[] sendData;
+            sendData = msg.getBytes();
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, 2709);
+            clientSocket.send(sendPacket);
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            clientSocket.receive(receivePacket);
+            data = new String(receivePacket.getData(), receivePacket.getOffset(), receivePacket.getLength(), "UTF-8");
+            Log.d("TESST",data);
+            clientSocket.close();
+        } catch (Exception e) {
+            Log.d("TESST",e.toString());
+            e.printStackTrace();
+        }
+
+    }
+    private class CheckStatusTask extends AsyncTask<Object, Object, Boolean> {
+        protected Boolean doInBackground(Object... arg0) {
+            sendUDPMessage(PATH +"@","12345RR");
+            return true;
+        }
+        protected void onPostExecute(Boolean flag) {
+            Log.d(TAG, "onPostExecute: "+"vao day  "+data);
+            for(int i =0;i<2;i++){
+                myRef = database.getReference(LIST_DEVICE).child(PATH).child(data +i);
+                myRef.setValue(new Device(1,data+i,"Thiết bị "+i));
+            }
+
+        }
     }
 }

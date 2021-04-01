@@ -39,8 +39,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:onClick="onBackClicked"
-                            android:background="@drawable/ic_chevron_left_black_24dp" />
+                            android:background="@drawable/ic_chevron_left_black_24dp"
+                            android:onClick="onBackClicked" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -85,6 +85,7 @@
                             android:orientation="vertical">
 
                             <ImageView
+                                android:id="@+id/ivScanDevice"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:background="@drawable/ic_baseline_search_24" />
